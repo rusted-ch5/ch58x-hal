@@ -1,14 +1,20 @@
 [package]
-name = "ch58x-hal"
+name = "ch58x-hal-rs"
 version = "0.1.0-alpha.1"
 edition = "2024"
 rust-version = "1.85"
 description = "Pure Rust hardware abstraction for WCH CH58x microcontrollers"
 repository = "https://github.com/rusted-ch5/ch58x-hal"
 homepage = "https://github.com/rusted-ch5/ch58x-hal"
+documentation = "https://docs.rs/ch58x-hal-rs"
 license = "MIT OR Apache-2.0"
 keywords = ["wch", "qingke", "riscv", "embedded-hal", "no-std"]
 categories = ["embedded", "no-std", "hardware-support"]
+
+[lib]
+# Keep the conventional source-level crate name while avoiding the unrelated
+# `ch58x-hal` package already present on crates.io.
+name = "ch58x_hal"
 
 [features]
 default = ["ch582"]
@@ -25,5 +31,8 @@ embedded-io = { version = "0.6", optional = true }
 embedded-storage-async = "0.4"
 portable-atomic = { version = "1.11", features = ["critical-section"] }
 qingke = { version = "0.6.1", default-features = false }
+
+[package.metadata.docs.rs]
+targets = ["riscv32imc-unknown-none-elf"]
 
 [workspace]

@@ -2,6 +2,9 @@
 
 Pure Rust hardware abstraction for WCH CH58x microcontrollers.
 
+The crates.io package is `ch58x-hal-rs`; its Rust library name remains
+`ch58x_hal`.
+
 The crate currently provides:
 
 - compile-time selection for CH582 and CH585;
