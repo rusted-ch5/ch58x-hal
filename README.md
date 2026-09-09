@@ -10,7 +10,8 @@ The crate currently provides:
 - a QingKe-compatible global critical-section implementation;
 - system-clock setup for CH582 and CH585;
 - owned digital input/output pins implementing `embedded-hal` 1.0 traits;
-- bounded blocking ADC conversions, including temperature-sensor support.
+- bounded blocking ADC conversions, including temperature-sensor support;
+- coherent RTC counter and day reads.
 
 ## Status
 

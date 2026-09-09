@@ -15,6 +15,7 @@ pub mod adc;
 mod critical_section_impl;
 pub mod gpio;
 pub mod peripherals;
+pub mod rtc;
 pub mod sysctl;
 
 pub use peripherals::Peripherals;
