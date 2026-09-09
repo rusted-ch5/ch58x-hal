@@ -11,7 +11,9 @@ The crate currently provides:
 - system-clock setup for CH582 and CH585;
 - owned digital input/output pins implementing `embedded-hal` 1.0 traits;
 - bounded blocking ADC conversions, including temperature-sensor support;
-- coherent RTC counter and day reads.
+- coherent RTC counter and day reads;
+- an asynchronous NOR-flash trait implementation for the CH582 DataFlash
+  window.
 
 ## Status
 

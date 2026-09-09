@@ -13,6 +13,10 @@ pub use ch58x::ch58x as pac;
 
 pub mod adc;
 mod critical_section_impl;
+#[cfg(feature = "ch582")]
+pub mod dataflash;
+#[cfg(feature = "ch582")]
+mod dataflash_protocol;
 pub mod gpio;
 pub mod peripherals;
 pub mod rtc;
