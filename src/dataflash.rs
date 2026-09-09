@@ -1,4 +1,4 @@
-//! Register-level CH582 DataFlash driver.
+//! Register-level CH58x DataFlash driver.
 //!
 //! The public view is deliberately limited to the final 8 KiB of the 32-KiB
 //! DataFlash region. Program flash, bootloader flash and chip configuration are

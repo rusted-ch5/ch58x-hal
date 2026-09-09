@@ -12,7 +12,7 @@ The crate currently provides:
 - owned digital input/output pins implementing `embedded-hal` 1.0 traits;
 - bounded blocking ADC conversions, including temperature-sensor support;
 - coherent RTC counter and day reads;
-- an asynchronous NOR-flash trait implementation for the CH582 DataFlash
+- an asynchronous NOR-flash trait implementation for the CH58x DataFlash
   window;
 - blocking UART0 through UART3 with checked baud-rate selection and
   `embedded-io` traits plus non-blocking FIFO access.

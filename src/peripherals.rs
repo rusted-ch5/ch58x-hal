@@ -8,6 +8,20 @@ pub struct DATAFLASH {
     _private: (),
 }
 
+impl DATAFLASH {
+    /// Creates a DataFlash ownership token without checking the HAL singleton.
+    ///
+    /// This is intended for runtime crates that own the complete peripheral
+    /// inventory and enforce their own singleton gate.
+    ///
+    /// # Safety
+    ///
+    /// The caller must ensure that no other `DATAFLASH` token exists.
+    pub unsafe fn steal() -> Self {
+        Self { _private: () }
+    }
+}
+
 /// Application-owned peripherals returned by [`crate::take`].
 #[allow(non_snake_case)]
 pub struct Peripherals {
