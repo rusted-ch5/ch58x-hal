@@ -21,6 +21,8 @@ pub mod gpio;
 pub mod peripherals;
 pub mod rtc;
 pub mod sysctl;
+#[cfg(feature = "uart")]
+pub mod uart;
 
 pub use peripherals::Peripherals;
 
