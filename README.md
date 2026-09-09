@@ -15,7 +15,7 @@ The crate currently provides:
 - an asynchronous NOR-flash trait implementation for the CH582 DataFlash
   window;
 - blocking UART0 through UART3 with checked baud-rate selection and
-  `embedded-io` traits.
+  `embedded-io` traits plus non-blocking FIFO access.
 
 ## Status
 

@@ -145,41 +145,43 @@ const _: () = {
 mod sealed {
     use super::*;
 
-    pub trait Instance {
-        const INDEX: usize;
-
-        fn regs() -> &'static pac::uart0::RegisterBlock;
-    }
-
-    pub trait TxPin<T: Instance>: GpioPin {
-        const REMAPPED: bool;
-    }
-
-    pub trait RxPin<T: Instance>: GpioPin {
-        const REMAPPED: bool;
-    }
+    pub trait Instance {}
+    pub trait TxPin<T: super::Instance>: GpioPin {}
+    pub trait RxPin<T: super::Instance>: GpioPin {}
 }
 
 /// A CH58x UART peripheral instance.
-pub trait Instance: sealed::Instance + Send + 'static {}
+pub trait Instance: sealed::Instance + Send + 'static {
+    #[doc(hidden)]
+    const INDEX: usize;
+
+    #[doc(hidden)]
+    fn regs() -> &'static pac::uart0::RegisterBlock;
+}
 
 /// A valid transmit pin for UART instance `T`.
-pub trait TxPin<T: Instance>: sealed::TxPin<T> {}
+pub trait TxPin<T: Instance>: sealed::TxPin<T> {
+    #[doc(hidden)]
+    const REMAPPED: bool;
+}
 
 /// A valid receive pin for UART instance `T`.
-pub trait RxPin<T: Instance>: sealed::RxPin<T> {}
+pub trait RxPin<T: Instance>: sealed::RxPin<T> {
+    #[doc(hidden)]
+    const REMAPPED: bool;
+}
 
 macro_rules! impl_instance {
     ($peripheral:ty, $index:expr) => {
-        impl sealed::Instance for $peripheral {
+        impl sealed::Instance for $peripheral {}
+
+        impl Instance for $peripheral {
             const INDEX: usize = $index;
 
             fn regs() -> &'static pac::uart0::RegisterBlock {
                 unsafe { &*<$peripheral>::PTR }
             }
         }
-
-        impl Instance for $peripheral {}
     };
 }
 
@@ -190,10 +192,10 @@ impl_instance!(pac::UART3, 3);
 
 macro_rules! impl_pin {
     ($trait_name:ident, $peripheral:ty, $pin:ty, $remapped:expr) => {
-        impl sealed::$trait_name<$peripheral> for $pin {
+        impl sealed::$trait_name<$peripheral> for $pin {}
+        impl $trait_name<$peripheral> for $pin {
             const REMAPPED: bool = $remapped;
         }
-        impl $trait_name<$peripheral> for $pin {}
     };
 }
 
@@ -319,6 +321,31 @@ where
     /// Actual baud rate produced by the selected integer dividers.
     pub fn actual_baudrate(&self) -> u32 {
         self.actual_baudrate
+    }
+
+    /// Reads all bytes currently available in the receive FIFO.
+    ///
+    /// Returns zero when the FIFO is empty.
+    pub fn try_read(&mut self, buffer: &mut [u8]) -> Result<usize, Error> {
+        Self::read_available(buffer)
+    }
+
+    /// Writes as many bytes as currently fit in the transmit FIFO.
+    ///
+    /// Returns zero when the FIFO is full.
+    pub fn try_write(&mut self, buffer: &[u8]) -> Result<usize, Error> {
+        let regs = T::regs();
+        let available = FIFO_CAPACITY.saturating_sub(usize::from(regs.tfc().read().bits()));
+        let count = available.min(buffer.len());
+        for byte in &buffer[..count] {
+            regs.thr().write(|w| unsafe { w.bits(*byte) });
+        }
+        Ok(count)
+    }
+
+    /// Returns true after the FIFO and final shift register are empty.
+    pub fn is_tx_idle(&self) -> bool {
+        T::regs().lsr().read().tx_all_emp().bit_is_set()
     }
 
     fn receive_byte() -> Result<Option<u8>, Error> {
