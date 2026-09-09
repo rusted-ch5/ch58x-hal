@@ -283,11 +283,7 @@ impl DataFlash {
         _write: bool,
         operation: impl FnOnce() -> Result<T, Error>,
     ) -> Result<T, Error> {
-        let result = critical_section::with(|_| {
-            let result = operation();
-            result
-        });
-        result
+        critical_section::with(|_| operation())
     }
 }
 

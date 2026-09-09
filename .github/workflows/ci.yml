@@ -7,19 +7,60 @@ on:
 permissions:
   contents: read
 
+env:
+  CARGO_INCREMENTAL: "0"
+
 jobs:
-  check:
+  quality:
+    name: Formatting and feature contract
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: "1.85"
           targets: riscv32imc-unknown-none-elf
           components: rustfmt
-      - name: Check formatting
-        run: cargo fmt --all -- --check
-      - name: Check CH582
-        run: cargo check --target riscv32imc-unknown-none-elf --no-default-features --features ch582,uart
-      - name: Check CH585
-        run: cargo check --target riscv32imc-unknown-none-elf --no-default-features --features ch585,uart
+      - run: cargo fmt --all -- --check
+      - name: Reject a missing chip selection
+        run: |
+          if cargo check --locked --target riscv32imc-unknown-none-elf --no-default-features 2>feature-error.log; then
+            exit 1
+          fi
+          grep -F 'ch58x-hal requires exactly one chip feature' feature-error.log
+      - name: Reject simultaneous chip selections
+        run: |
+          if cargo check --locked --target riscv32imc-unknown-none-elf --no-default-features --features ch582,ch585 2>feature-error.log; then
+            exit 1
+          fi
+          grep -F 'ch58x-hal chip features ch582 and ch585 are mutually exclusive' feature-error.log
+
+  feature-matrix:
+    name: HAL ${{ matrix.chip }} / ${{ matrix.profile }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - chip: ch582
+            profile: minimal
+            features: ch582
+          - chip: ch582
+            profile: complete
+            features: ch582,rt,uart
+          - chip: ch585
+            profile: minimal
+            features: ch585
+          - chip: ch585
+            profile: complete
+            features: ch585,rt,uart
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: "1.85"
+          targets: riscv32imc-unknown-none-elf
+          components: clippy
+      - run: cargo check --locked --target riscv32imc-unknown-none-elf --no-default-features --features "${{ matrix.features }}"
+      - run: cargo clippy --locked --target riscv32imc-unknown-none-elf --no-default-features --features "${{ matrix.features }}" -- -D warnings
+      - run: RUSTDOCFLAGS="-D warnings" cargo doc --locked --target riscv32imc-unknown-none-elf --no-deps --no-default-features --features "${{ matrix.features }}"
