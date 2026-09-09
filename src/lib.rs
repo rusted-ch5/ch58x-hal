@@ -12,6 +12,7 @@ use portable_atomic::{AtomicBool, Ordering};
 pub use ch58x::ch58x as pac;
 
 mod critical_section_impl;
+pub mod gpio;
 pub mod peripherals;
 pub mod sysctl;
 

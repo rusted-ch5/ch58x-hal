@@ -8,7 +8,8 @@ The crate currently provides:
 - PAC access through `ch58x_hal::pac`;
 - single-owner peripheral tokens;
 - a QingKe-compatible global critical-section implementation;
-- system-clock setup for CH582 and CH585.
+- system-clock setup for CH582 and CH585;
+- owned digital input/output pins implementing `embedded-hal` 1.0 traits.
 
 ## Status
 

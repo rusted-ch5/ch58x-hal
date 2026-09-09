@@ -18,6 +18,7 @@ ch585 = ["qingke/v3"]
 [dependencies]
 ch58x = { version = "0.3", features = ["ch58x"] }
 critical-section = { version = "1.2", features = ["restore-state-bool"] }
+embedded-hal = "1.0"
 portable-atomic = { version = "1.11", features = ["critical-section"] }
 qingke = { version = "0.6.1", default-features = false }
 
