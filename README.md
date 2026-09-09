@@ -9,7 +9,8 @@ The crate currently provides:
 - single-owner peripheral tokens;
 - a QingKe-compatible global critical-section implementation;
 - system-clock setup for CH582 and CH585;
-- owned digital input/output pins implementing `embedded-hal` 1.0 traits.
+- owned digital input/output pins implementing `embedded-hal` 1.0 traits;
+- bounded blocking ADC conversions, including temperature-sensor support.
 
 ## Status
 
