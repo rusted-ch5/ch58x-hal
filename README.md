@@ -7,7 +7,8 @@ The crate currently provides:
 - compile-time selection for CH582 and CH585;
 - PAC access through `ch58x_hal::pac`;
 - single-owner peripheral tokens;
-- a QingKe-compatible global critical-section implementation.
+- a QingKe-compatible global critical-section implementation;
+- system-clock setup for CH582 and CH585.
 
 ## Status
 
