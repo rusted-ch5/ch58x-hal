@@ -24,13 +24,13 @@ jobs:
       - run: cargo fmt --all -- --check
       - name: Reject a missing chip selection
         run: |
-          if cargo check --locked --target riscv32imc-unknown-none-elf --no-default-features 2>feature-error.log; then
+          if cargo check --target riscv32imc-unknown-none-elf --no-default-features 2>feature-error.log; then
             exit 1
           fi
           grep -F 'ch58x-hal requires exactly one chip feature' feature-error.log
       - name: Reject simultaneous chip selections
         run: |
-          if cargo check --locked --target riscv32imc-unknown-none-elf --no-default-features --features ch582,ch585 2>feature-error.log; then
+          if cargo check --target riscv32imc-unknown-none-elf --no-default-features --features ch582,ch585 2>feature-error.log; then
             exit 1
           fi
           grep -F 'ch58x-hal chip features ch582 and ch585 are mutually exclusive' feature-error.log
@@ -61,6 +61,6 @@ jobs:
           toolchain: "1.85"
           targets: riscv32imc-unknown-none-elf
           components: clippy
-      - run: cargo check --locked --target riscv32imc-unknown-none-elf --no-default-features --features "${{ matrix.features }}"
-      - run: cargo clippy --locked --target riscv32imc-unknown-none-elf --no-default-features --features "${{ matrix.features }}" -- -D warnings
-      - run: RUSTDOCFLAGS="-D warnings" cargo doc --locked --target riscv32imc-unknown-none-elf --no-deps --no-default-features --features "${{ matrix.features }}"
+      - run: cargo check --target riscv32imc-unknown-none-elf --no-default-features --features "${{ matrix.features }}"
+      - run: cargo clippy --target riscv32imc-unknown-none-elf --no-default-features --features "${{ matrix.features }}" -- -D warnings
+      - run: RUSTDOCFLAGS="-D warnings" cargo doc --target riscv32imc-unknown-none-elf --no-deps --no-default-features --features "${{ matrix.features }}"
