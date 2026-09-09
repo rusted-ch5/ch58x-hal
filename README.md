@@ -17,6 +17,9 @@ The crate currently provides:
 - blocking UART0 through UART3 with checked baud-rate selection and
   `embedded-io` traits plus non-blocking FIFO access.
 
+Enable the `rt` feature when linking a complete firmware image with
+`qingke-rt`.
+
 ## Status
 
 The crate is under active development. APIs may change before the first stable
