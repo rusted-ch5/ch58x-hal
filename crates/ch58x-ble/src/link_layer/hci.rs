@@ -33,8 +33,8 @@ impl Runner {
             0x1009 if params.is_empty() => Ok(&[0, 0, 0, 0, 0, 0][..]),
             // Credits are returned only after the peer acknowledges an ACL owner.
             0x2002 if params.is_empty() => {
-                let count = ble_controller::hci::ACL_CREDITS;
-                Ok(&[0x1b, 0x00, count][..])
+                const BUFFER_SIZE: [u8; 3] = [0x1b, 0x00, ble_controller::hci::ACL_CREDITS];
+                Ok(&BUFFER_SIZE)
             }
             // Connection Parameters Request procedure, and
             // Extended Reject Indication.

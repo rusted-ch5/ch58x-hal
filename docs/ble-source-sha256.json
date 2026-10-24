@@ -13,7 +13,7 @@
   "crates/ble-controller/src/whitening.rs": "a5a5460d461fbe73bdccd0cd8367c69cb432dbeac0bd486053960bc5f56b6e50",
   "crates/ch58x-ble/src/controller.rs": "68e9e93c18c7311d89a9c24b883d8e0b3fc3da0fe225f88c114c16c649901108",
   "crates/ch58x-ble/src/lib.rs": "efdbc5bbaea12119858e506321bce960a216ce3333f08afdd95e7d5450448c1c",
-  "crates/ch58x-ble/src/link_layer/hci.rs": "0fedcfc00ad1e6dc23b4045627bc5782faf2197889d28b2f7e45964a706dab99",
+  "crates/ch58x-ble/src/link_layer/hci.rs": "6e3f11b981f789ff5c171d3ce74785112b8fbcbb19fd8d91691985cf8862d137",
   "crates/ch58x-ble/src/link_layer.rs": "f8ad82b8ff95f719fbf3ddc134c091ddd4621cd500f680928de6dce58f387484",
   "crates/ch58x-ble/src/radio.rs": "25dd68357ad931308c95c8ab91ea6491c660e6ed672ed7e1956657c6067e1376",
   "crates/ch58x-ble/src/radio_dma_policy.rs": "ea66572a73673e2aa0023b1fbfa0cdcb37ed9b70202180b6579c3f95332f41a5",
