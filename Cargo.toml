@@ -36,3 +36,6 @@ qingke = { version = "0.6.1", default-features = false }
 targets = ["riscv32imc-unknown-none-elf"]
 
 [workspace]
+members = ["crates/ble-controller"]
+default-members = ["."]
+resolver = "3"

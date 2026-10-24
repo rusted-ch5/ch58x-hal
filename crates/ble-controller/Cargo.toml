@@ -1,0 +1,15 @@
+[package]
+name = "ch58x-ble-controller"
+version = "0.1.0-alpha.1"
+edition = "2024"
+rust-version = "1.88"
+license = "MIT OR Apache-2.0"
+description = "Portable Bluetooth LE protocol primitives and procedure ownership"
+repository = "https://github.com/rusted-ch5/ch58x-hal"
+publish = false
+
+[lib]
+name = "ble_controller"
+
+[dependencies]
+embassy-time = { version = "0.5", default-features = false }

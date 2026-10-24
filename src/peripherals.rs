@@ -22,6 +22,23 @@ impl DATAFLASH {
     }
 }
 
+/// Exclusive ownership of the radio, baseband, LLE, and BLEB/BLEL interrupts.
+///
+/// The HAL reserves this resource; optional controller crates implement it.
+pub struct BLE {
+    _private: (),
+}
+
+impl BLE {
+    /// Create a radio token for a runtime that owns the peripheral singleton.
+    ///
+    /// # Safety
+    /// No other BLE token, radio driver, or BLE interrupt owner may exist.
+    pub unsafe fn steal() -> Self {
+        Self { _private: () }
+    }
+}
+
 /// Application-owned peripherals returned by [`crate::take`].
 #[allow(non_snake_case)]
 pub struct Peripherals {
@@ -44,6 +61,7 @@ pub struct Peripherals {
     pub GPIOB: pac::GPIOB,
     pub RTC: pac::RTC,
     pub DATAFLASH: DATAFLASH,
+    pub BLE: BLE,
 }
 
 pub(crate) fn from_pac(peripherals: pac::Peripherals) -> Peripherals {
@@ -67,5 +85,6 @@ pub(crate) fn from_pac(peripherals: pac::Peripherals) -> Peripherals {
         GPIOB: peripherals.GPIOB,
         RTC: peripherals.RTC,
         DATAFLASH: DATAFLASH { _private: () },
+        BLE: BLE { _private: () },
     }
 }
