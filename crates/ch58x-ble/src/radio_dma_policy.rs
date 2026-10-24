@@ -32,12 +32,12 @@ pub const fn classify_received_length(
     if wire_len > RF_DMA_BUFFER_LEN {
         return ReceiveLengthPolicy::PhysicalDmaOverflow;
     }
-    let maximum_payload_len = if advertising {
-        MAX_LEGACY_ADV_PAYLOAD_LEN
+    let maximum_wire_len = if advertising {
+        MAX_LEGACY_ADV_WIRE_LEN
     } else {
-        CONNECTION_RX_MAX_WIRE_PAYLOAD_LEN
+        MAX_DATA_WIRE_LEN
     };
-    if payload_len > maximum_payload_len {
+    if wire_len > maximum_wire_len {
         return ReceiveLengthPolicy::UnsupportedCapability;
     }
     ReceiveLengthPolicy::Accepted { wire_len }

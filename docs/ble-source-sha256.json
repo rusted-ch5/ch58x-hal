@@ -16,7 +16,7 @@
   "crates/ch58x-ble/src/link_layer/hci.rs": "6e3f11b981f789ff5c171d3ce74785112b8fbcbb19fd8d91691985cf8862d137",
   "crates/ch58x-ble/src/link_layer.rs": "f8ad82b8ff95f719fbf3ddc134c091ddd4621cd500f680928de6dce58f387484",
   "crates/ch58x-ble/src/radio.rs": "25dd68357ad931308c95c8ab91ea6491c660e6ed672ed7e1956657c6067e1376",
-  "crates/ch58x-ble/src/radio_dma_policy.rs": "ea66572a73673e2aa0023b1fbfa0cdcb37ed9b70202180b6579c3f95332f41a5",
+  "crates/ch58x-ble/src/radio_dma_policy.rs": "06061ea9a755055dc3d3f9b87c2fd8c51d3cf04d05879e349cecf3fc5b34ea57",
   "crates/ch58x-ble/src/radio_phy.rs": "344d5583cbce3a0f4f24f059d9c06889fbd204e3840785c754b495257f35ed15",
   "crates/ch58x-ble/src/radio_rx_status.rs": "6dc97cb1bde09ff8db10cd17ab4c335f28ed1031831379e6b8c7ecf7beebfae6",
   "crates/ch58x-ble/src/rf_frontend.rs": "986018b36c50c371ff1d32b9412d11a0380e2149195dbe44b15df5c3b7c37292",

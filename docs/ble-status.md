@@ -9,7 +9,7 @@ in this checkout. Library checks do not produce or verify a bootable firmware.
 | Portable core + HCI host tests | 70 passed on aarch64 macOS, Rust 1.97.1 and Rust 1.88.0 |
 | Exact backend DMA/timing/W1C pure-module tests | 7 passed on the host |
 | CH585 library cross-build | Passed for `riscv32imc-unknown-none-elf` |
-| CH585 Clippy | Passed with `-D warnings` |
+| CH585 Clippy | Passed with `-D warnings`; Rust 1.88.0 cross-check also passed |
 | CH585 rustdoc | Passed with `RUSTDOCFLAGS=-D warnings` |
 | HAL chip/feature matrix | CH582 and CH585, minimal and `rt,uart`, Clippy passed |
 | Firmware link/map/stack, verified flash and boot | Not run for this extracted Rust snapshot |
@@ -36,3 +36,9 @@ Not implemented as backend capabilities: encryption/security, Central scanning
 or initiation, DLE, extended advertising, multiple connections, multi-PDU events,
 or PHY updates. The peer behavior contract is in `ble-peer-contract.md`; testers
 supply the Nordic implementation independently. No Nordic firmware is published.
+
+Initial Rust 1.88 CI exposed an arm-local response lifetime and constants only
+referenced by anonymous const assertions. The response now has const storage,
+and the runtime wire-length policy uses the constants directly. The corrected
+backend passed the local Rust 1.88 RISC-V Clippy check; earlier failures remain
+in the branch CI history.
