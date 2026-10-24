@@ -1,0 +1,24 @@
+[package]
+name = "ch58x-ble"
+version = "0.1.0-alpha.1"
+edition = "2024"
+rust-version = "1.88"
+license = "MIT OR Apache-2.0"
+description = "Experimental plaintext CH585 radio and in-process HCI controller"
+repository = "https://github.com/rusted-ch5/ch58x-hal"
+publish = false
+
+[dependencies]
+ble-controller = { package = "ch58x-ble-controller", path = "../ble-controller" }
+ch58x-hal = { package = "ch58x-hal-rs", path = "../..", default-features = false, features = ["ch585"] }
+bt-hci = "0.10"
+critical-section = { version = "1.2", features = ["restore-state-bool"] }
+embassy-sync = "0.8"
+embassy-futures = "0.1"
+embassy-time = { version = "0.5", features = ["tick-hz-1_000_000"] }
+embedded-io = "0.7"
+rand_chacha = { version = "0.3", default-features = false }
+rand_core = "0.6"
+portable-atomic = { version = "1.11", features = ["critical-section"] }
+qingke = { version = "0.6.1", default-features = false, features = ["v3"] }
+qingke-rt = { package = "qingke-rs", git = "https://github.com/rusted-ch5/qingke-rs.git", rev = "9f2eed7594eb6ea8cd4ae9504e4023698ce05fcd", default-features = false, features = ["ch585-v3c"] }

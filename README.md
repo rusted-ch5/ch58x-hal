@@ -33,3 +33,21 @@ release.
 Licensed under either of
 [Apache License, Version 2.0](LICENSE-APACHE) or [MIT license](LICENSE-MIT) at
 your option.
+
+## Workspace modules
+
+| Package / path | Responsibility | Dependencies |
+| --- | --- | --- |
+| `ch58x-hal-rs` / repository root | CH582/CH585 clocks, GPIO, UART, DataFlash, peripheral ownership including `BLE` | PAC and embedded traits; no BLE stack |
+| `ch58x-ble-controller` / `crates/ble-controller` | Portable advertising parser, channel selection, SN/NESN ownership, LLCP instants/timeouts and HCI validation | `no_std`, Embassy time types; no MMIO or Host stack |
+| `ch58x-ble` / `crates/ch58x-ble` | Experimental CH585 RF calibration, DMA/IRQ, single-connection Peripheral runner and bounded HCI transport | HAL + portable core + Embassy primitives |
+
+The default workspace member is still the HAL. Select a BLE package explicitly;
+`--workspace` would combine the default CH582 HAL with the CH585-only backend.
+The HAL retains its Rust 1.85 contract. The BLE crates require Rust 1.88 or newer.
+
+The BLE packages are Git-only development snapshots (`publish = false`). They
+contain no encryption engine, security manager, keyboard application, or Nordic
+fixture implementation. This snapshot has host-test and library-build evidence,
+**not Rust firmware RF acceptance**. See [BLE status](docs/ble-status.md),
+[integration](docs/ble-integration.md), and [migration](MIGRATION.md).
